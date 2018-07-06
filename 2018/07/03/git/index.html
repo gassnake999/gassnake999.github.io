@@ -3,7 +3,7 @@
 <!--<![endif]-->
 
 <head>
-  <title>Git常用命令/Git工作流🔥 | 帅哥的博客</title>
+  <title>Git常用命令/Gitflow工作流🔥 | 帅哥的博客</title>
   <!-- Meta data -->
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -141,7 +141,7 @@
     
     
 </span>
-                <h1>Git常用命令/Git工作流🔥</h1>
+                <h1>Git常用命令/Gitflow工作流🔥</h1>
             </div>
         </div>
         <div class="col-md-8 col-md-offset-2">
@@ -163,7 +163,72 @@
 <p>8.删除远程分支<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git push origin -d 远程分支名</span><br><span class="line">例如，删除刚刚提交到远程的dev分支：</span><br><span class="line">git push origin -d dev</span><br></pre></td></tr></table></figure></p>
 <p>9.删除本地分支<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">git branch 分支名称 -d</span><br><span class="line">例如，在master分支下，删除新开的dev分支：</span><br><span class="line">git branch dev -d</span><br><span class="line">注意：如果dev的更改，push到远程，在GitLab(或者其他git系统)上面进行了merge操作，但是本地master没有pull最新的代码，会删除不成功，可以先git pull origin master，或者强制删除</span><br><span class="line">git branch dev -D</span><br></pre></td></tr></table></figure></p>
 <p>10.更新分支列表信息<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git fetch -p</span><br></pre></td></tr></table></figure></p>
-<h3 id="Gitflow工作流"><a href="#Gitflow工作流" class="headerlink" title="Gitflow工作流"></a>Gitflow工作流</h3>
+<h3 id="Git工作流"><a href="#Git工作流" class="headerlink" title="Git工作流"></a>Git工作流</h3><p>什么是Git工作流？</p>
+<p>Git工作流你可以理解为工作中团队成员遵守的一种代码管理方案，在Git中有以下几种工作流方案作为方案指导：</p>
+<ul>
+<li>集中式工作流</li>
+<li>功能开发工作流</li>
+<li>Gitflow工作流</li>
+<li>Forking工作流</li>
+</ul>
+<p>因为目前所在公司采用得是Gitflow工作流，所以着重介绍Gitflow工作流。</p>
+<h3 id="Gitflow工作流"><a href="#Gitflow工作流" class="headerlink" title="Gitflow工作流"></a>Gitflow工作流</h3><p><img src="http://pbbyz1cwq.bkt.clouddn.com/git-workflows-gitflow.png" alt="效果图"><br>这节介绍的Gitflow工作流借鉴自在nvie的Vincent Driessen。</p>
+<p>Gitflow工作流定义了一个围绕项目发布的严格分支模型。虽然比功能分支工作流复杂几分，但提供了用于一个健壮的用于管理大型项目的框架。</p>
+<p>Gitflow工作流没有用超出功能分支工作流的概念和命令，而是为不同的分支分配一个很明确的角色，并定义分支之间如何和什么时候进行交互。除了使用功能分支，在做准备、维护和记录发布也使用各自的分支。当然你可以用上功能分支工作流所有的好处：Pull Requests、隔离实验性开发和更高效的协作。</p>
+<p><strong>工作方式</strong></p>
+<p>Gitflow工作流仍然用中央仓库作为所有开发者的交互中心。和其它的工作流一样，开发者在本地工作并push分支到要中央仓库中。</p>
+<p><strong>历史分支</strong></p>
+<p>相对使用仅有的一个master分支，Gitflow工作流使用2个分支来记录项目的历史。master分支存储了正式发布的历史，而develop分支作为功能的集成分支。这样也方便master分支上的所有提交分配一个版本号。<br><img src="http://pbbyz1cwq.bkt.clouddn.com/git-workflow-release-cycle-1historical.png" alt="效果图"></p>
+<p>剩下要说明的问题围绕着这2个分支的区别展开。</p>
+<p><strong>功能分支</strong></p>
+<p>每个新功能位于一个自己的分支，这样可以push到中央仓库以备份和协作。但功能分支不是从master分支上拉出新分支，而是使用develop分支作为父分支。当新功能完成时，合并回develop分支。新功能提交应该从不直接与master分支交互。<br><img src="http://pbbyz1cwq.bkt.clouddn.com/git-workflow-release-cycle-2feature.png" alt="效果图"></p>
+<p>注意，从各种含义和目的上来看，功能分支加上develop分支就是功能分支工作流的用法。但Gitflow工作流没有在这里止步。</p>
+<p><strong>发布分支</strong></p>
+<p><img src="http://pbbyz1cwq.bkt.clouddn.com/git-workflow-release-cycle-3release.png" alt="效果图"></p>
+<p>一旦develop分支上有了做一次发布（或者说快到了既定的发布日）的足够功能，就从develop分支上fork一个发布分支。新建的分支用于开始发布循环，所以从这个时间点开始之后新的功能不能再加到这个分支上 —— 这个分支只应该做Bug修复、文档生成和其它面向发布任务。一旦对外发布的工作都完成了，发布分支合并到master分支并分配一个版本号打好Tag。另外，这些从新建发布分支以来的做的修改要合并回develop分支。</p>
+<p>使用一个用于发布准备的专门分支，使得一个团队可以在完善当前的发布版本的同时，另一个团队可以继续开发下个版本的功能。<br>这也打造定义良好的开发阶段（比如，可以很轻松地说，『这周我们要做准备发布版本4.0』，并且在仓库的目录结构中可以实际看到）。</p>
+<p>常用的分支约定：</p>
+<p>用于新建发布分支的分支: develop<br>用于合并的分支: master<br>分支命名: release-<em> 或 release/</em></p>
+<p><strong>维护分支</strong></p>
+<p><img src="http://pbbyz1cwq.bkt.clouddn.com/git-workflow-release-cycle-4maintenance.png" alt="效果图"></p>
+<p>维护分支或说是热修复（hotfix）分支用于生成快速给产品发布版本（production releases）打补丁，这是唯一可以直接从master分支fork出来的分支。修复完成，修改应该马上合并回master分支和develop分支（当前的发布分支），master分支应该用新的版本号打好Tag。</p>
+<p>为Bug修复使用专门分支，让团队可以处理掉问题而不用打断其它工作或是等待下一个发布循环。你可以把维护分支想成是一个直接在master分支上处理的临时发布。</p>
+<h3 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h3><p>下面的示例演示本工作流如何用于管理单个发布循环。假设你已经创建了一个中央仓库。</p>
+<p><strong>创建开发分支</strong><br><img src="http://pbbyz1cwq.bkt.clouddn.com/git-workflow-release-cycle-5createdev.png" alt="效果图"></p>
+<p>第一步为master分支配套一个develop分支。简单来做可以本地创建一个空的develop分支，push到服务器上：</p>
+<p>git branch develop<br>git push -u origin develop</p>
+<p>以后这个分支将会包含了项目的全部历史，而master分支将只包含了部分历史。其它开发者这时应该克隆中央仓库，建好develop分支的跟踪分支：</p>
+<p>git clone ssh://user@host/path/to/repo.git<br>git checkout -b develop origin/develop</p>
+<p>现在每个开发都有了这些历史分支的本地拷贝。</p>
+<p><strong>小红和小明开始开发新功能</strong></p>
+<p><img src="http://pbbyz1cwq.bkt.clouddn.com/git-workflow-release-cycle-6maryjohnbeginnew.png" alt="效果图"></p>
+<p>这个示例中，小红和小明开始各自的功能开发。他们需要为各自的功能创建相应的分支。新分支不是基于master分支，而是应该基于develop分支：</p>
+<p>git checkout -b some-feature develop</p>
+<p>他们用老套路添加提交到各自功能分支上：编辑、暂存、提交：<br>git status<br>git add<br>git commit</p>
+<p><strong>小红完成功能开发</strong></p>
+<p><img src="http://pbbyz1cwq.bkt.clouddn.com/git-workflow-release-cycle-7maryfinishes.png" alt="效果图"></p>
+<p>添加了提交后，小红觉得她的功能OK了。如果团队使用Pull Requests，这时候可以发起一个用于合并到develop分支。否则她可以直接合并到她本地的develop分支后push到中央仓库：</p>
+<p>git pull origin develop<br>git checkout develop<br>git merge some-feature<br>git push<br>git branch -d some-feature</p>
+<p>第一条命令在合并功能前确保develop分支是最新的。注意，功能决不应该直接合并到master分支。冲突解决方法和集中式工作流一样。</p>
+<p><strong>小红开始准备发布</strong></p>
+<p><img src="http://pbbyz1cwq.bkt.clouddn.com/git-workflow-release-cycle-8maryprepsrelease.png" alt="效果图"></p>
+<p>这个时候小明正在实现他的功能，小红开始准备她的第一个项目正式发布。像功能开发一样，她用一个新的分支来做发布准备。这一步也确定了发布的版本号：</p>
+<p>git checkout -b release-0.1 develop</p>
+<p>这个分支是清理发布、执行所有测试、更新文档和其它为下个发布做准备操作的地方，像是一个专门用于改善发布的功能分支。</p>
+<p>只要小红创建这个分支并push到中央仓库，这个发布就是功能冻结的。任何不在develop分支中的新功能都推到下个发布循环中。</p>
+<p><strong>小红完成发布</strong></p>
+<p><img src="http://pbbyz1cwq.bkt.clouddn.com/git-workflow-release-cycle-9maryfinishes.png" alt="效果图"></p>
+<p>一旦准备好了对外发布，小红合并修改到master分支和develop分支上，删除发布分支。合并回develop分支很重要，因为在发布分支中已经提交的更新需要在后面的新功能中也要是可用的。另外，如果小红的团队要求Code Review，这是一个发起Pull Request的理想时机。</p>
+<p>git checkout master<br>git merge release-0.1<br>git push<br>git checkout develop<br>git merge release-0.1<br>git push<br>git branch -d release-0.1</p>
+<p>发布分支是作为功能开发（develop分支）和对外发布（master分支）间的缓冲。只要有合并到master分支，就应该打好Tag以方便跟踪。</p>
+<p>git tag -a 0.1 -m “Initial public release” master<br>git push –tags</p>
+<p>Git有提供各种勾子（hook），即仓库有事件发生时触发执行的脚本。可以配置一个勾子，在你push中央仓库的master分支时，自动构建好对外发布。</p>
+<p><strong>最终用户发现Bug</strong></p>
+<p><img src="http://pbbyz1cwq.bkt.clouddn.com/git-workflow-gitflow-enduserbug.png" alt="效果图"></p>
+<p>对外发布后，小红回去和小明一起做下个发布的新功能开发，直到有最终用户开了一个Ticket抱怨当前版本的一个Bug。为了处理Bug，小红（或小明）从master分支上拉出了一个维护分支，提交修改以解决问题，然后直接合并回master分支：<br>git checkout -b issue-#001 master #Fix the bug<br>git checkout master<br>git merge issue-#001<br>git push</p>
+<p>就像发布分支，维护分支中新加这些重要修改需要包含到develop分支中，所以小红要执行一个合并操作。然后就可以安全地删除这个分支了：</p>
+<p>git checkout develop<br>git merge issue-#001<br>git push<br>git branch -d issue-#001</p>
+
             <div class="clearfix"></div>
             <hr class="nogutter">
         </div>
