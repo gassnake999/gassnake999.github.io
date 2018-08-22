@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+<!--<![endif]-->
+
+<head>
+  <title>Node.js简单入门 | 帅哥的博客</title>
+  <!-- Meta data -->
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content="帅哥的博客">
+    <meta name="author" content="wangyixuan">
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+
+    <!-- Favicon, (keep icon in root folder) -->
+    <link rel="Shortcut Icon" href="/img/favicon.ico" type="image/ico">
+
+    <link rel="alternate" href="/atom.xml" title="帅哥的博客" type="application/atom+xml">
+    <link rel="stylesheet" href="/css/all.css" media="screen" type="text/css">
+    
+    <link rel="stylesheet" href="/highlightjs/vs.css" type="text/css">
+    
+
+    <!--[if IE 8]>
+    <link rel="stylesheet" type="text/css" href="/css/ie8.css" />
+    <![endif]-->
+
+    <!-- jQuery | Load our jQuery, with an alternative source fallback to a local version if request is unavailable -->
+    <script src="/js/jquery-1.11.1.min.js"></script>
+    <script>window.jQuery || document.write('<script src="js/jquery-1.11.1.min.js"><\/script>')</script>
+
+    <!-- Load these in the <head> for quicker IE8+ load times -->
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="/js/html5shiv.min.js"></script>
+    <script src="/js/respond.min.js"></script>
+    <![endif]-->
+
+  
+  
+  
+
+  <style>.col-md-8.col-md-offset-2.opening-statement img{display:none;}</style>
+</head>
+
+<!--
+<body class="post-template">
+-->
+<body id="index" class="lightnav animsition">
+
+      <!-- ============================ Off-canvas navigation =========================== -->
+
+    <div class="sb-slidebar sb-right sb-style-overlay sb-momentum-scrolling">
+        <div class="sb-close" aria-label="Close Menu" aria-hidden="true">
+            <img src="/img/close.png" alt="Close"/>
+        </div>
+        <!-- Lists in Slidebars -->
+        <ul class="sb-menu">
+            <li><a href="/" class="animsition-link" title="Home">Home</a></li>
+            <li><a href="/archives" class="animsition-link" title="archive">archives</a></li>
+            <!-- Dropdown Menu -->
+			 
+            
+            
+        </ul>
+        <!-- Lists in Slidebars -->
+        <ul class="sb-menu secondary">
+            
+            <li><a href="/about.html" class="animsition-link" title="about">About</a></li>
+            <li><a href="/atom.xml" class="animsition-link" title="rss">RSS</a></li>
+        </ul>
+    </div>
+    
+    <!-- ============================ END Off-canvas navigation =========================== -->
+
+    <!-- ============================ #sb-site Main Page Wrapper =========================== -->
+
+    <div id="sb-site">
+        <!-- #sb-site - All page content should be contained within this id, except the off-canvas navigation itself -->
+
+        <!-- ============================ Header & Logo bar =========================== -->
+
+        <div id="navigation" class="navbar navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container">
+                    <!-- Nav logo -->
+                    <div class="logo">
+                        <a href="/" title="Logo" class="animsition-link">
+                        
+                        </a>
+                    </div>
+                    <!-- // Nav logo -->
+                    <!-- Info-bar -->
+                    <nav>
+                        <ul class="nav">
+                            <li><a href="/" class="animsition-link">帅哥的博客</a></li>
+                            <li class="nolink"><span>Always </span>Creative.</li>
+                            
+                            <li><a href="https://github.com/gassnake999" title="Github" target="_blank"><i class="icon-github"></i></a></li>
+                            
+                            
+                            
+                            
+                            
+                            <li><a href="https://weibo.com/u/2022482611?refer_flag=1001030101_" title="Sina-Weibo" target="_blank"><i class="icon-sina-weibo"></i></a></li>
+                            
+                            <li class="nolink"><span>Welcome!</span></li>
+                        </ul>
+                    </nav>
+                    <!--// Info-bar -->
+                </div>
+                <!-- // .container -->
+                <div class="learnmore sb-toggle-right">More</div>
+                <button type="button" class="navbar-toggle menu-icon sb-toggle-right" title="More">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar before"></span>
+                <span class="icon-bar main"></span>
+                <span class="icon-bar after"></span>
+                </button>
+            </div>
+            <!-- // .navbar-inner -->
+        </div>
+
+        <!-- ============================ Header & Logo bar =========================== -->
+
+
+      
+<section id="intro">
+    <div class="container">
+        <div class="row col-md-offset-2">
+            <div class="col-md-8">
+    			<span class="post-meta">
+      <time datetime="2018-08-22T02:50:32.000Z" itemprop="datePublished">
+          2018-08-22
+      </time>
+    
+    
+    | 
+    <a href='/tags/node/'>node</a>
+    
+    
+</span>
+                <h1>Node.js简单入门</h1>
+            </div>
+        </div>
+        <div class="col-md-8 col-md-offset-2">
+      		<blockquote>
+<p>部分内容来自转载，原作者<a href="https://github.com/nswbmw" target="_blank" rel="noopener">nswbmw</a></p>
+</blockquote>
+<h3 id="安装-Node-js"><a href="#安装-Node-js" class="headerlink" title="安装 Node.js"></a>安装 Node.js</h3><p>有三种方式安装 Node.js：一是通过安装包安装，二是通过源码编译安装，三是在 Linux 下可以通过 yum|apt-get 安装，在 Mac 下可以通过 Homebrew 安装。对于 Windows 和 Mac 用户，推荐使用安装包安装，Linux 用户推荐使用源码编译安装。<br>安装的步骤就不叙述了，直接官网下载安装包即刻，有问题自行<a href="https://www.google.com/" target="_blank" rel="noopener">Google</a></p>
+<h3 id="Node-js-知识点讲解"><a href="#Node-js-知识点讲解" class="headerlink" title="Node.js 知识点讲解"></a>Node.js 知识点讲解</h3><h4 id="1-require"><a href="#1-require" class="headerlink" title="1.require"></a>1.require</h4><p>require 用来加载一个文件的代码，关于 require 的机制这里不展开讲解，请仔细阅读 <a href="https://nodejs.org/api/modules.html" target="_blank" rel="noopener">官方文档</a>。</p>
+<p>简单概括以下几点:</p>
+<ul>
+<li>require 可加载 .js、.json 和 .node 后缀的文件</li>
+<li>require 的过程是同步的，所以这样是错误的:<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">setTimeout(() =&gt; &#123;</span><br><span class="line">  module.exports = &#123; a: <span class="string">'hello'</span> &#125;</span><br><span class="line">&#125;, 0)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>require 这个文件得到的是空对象 <code>{}</code></p>
+<ul>
+<li>require 目录的机制是:<ul>
+<li>如果目录下有 package.json 并指定了 main 字段，则用之</li>
+<li>如果不存在 package.json，则依次尝试加载目录下的 index.js 和 index.node</li>
+</ul>
+</li>
+<li>require 过的文件会加载到缓存，所以多次 require 同一个文件（模块）不会重复加载</li>
+<li>判断是否是程序的入口文件有两种方式:<ul>
+<li>require.main === module（推荐）</li>
+<li>module.parent === null</li>
+</ul>
+</li>
+</ul>
+<p><strong>循环引用</strong></p>
+<p>循环引用（或循环依赖）简单点来说就是 a 文件 require 了 b 文件，然后 b 文件又反过来 require 了 a 文件。我们用 a-&gt;b 代表 b require 了 a。</p>
+<p>简单的情况:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">a-&gt;b</span><br><span class="line">b-&gt;a</span><br></pre></td></tr></table></figure>
+<p>复杂点的情况:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">a-&gt;b</span><br><span class="line">b-&gt;c</span><br><span class="line">c-&gt;a</span><br></pre></td></tr></table></figure>
+<p>循环引用并不会报错，导致的结果是 require 的结果是空对象 <code>{}</code>，原因是 b require 了 a，a 又去 require 了 b，此时 b 还没初始化好，所以只能拿到初始值 <code>{}</code>。当产生循环引用时一般有两种方法解决：</p>
+<ol>
+<li><p>通过分离共用的代码到另一个文件解决，如上面简单的情况，可拆出共用的代码到 c 中，如下:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">c-&gt;a</span><br><span class="line">c-&gt;b</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>不在最外层 require，在用到的地方 require，通常在函数的内部</p>
+</li>
+</ol>
+<p>总的来说，循环依赖的陷阱并不大容易出现，但一旦出现了，对于新手来说还真不好定位。它的存在给我们提了个醒，要时刻注意你项目的依赖关系不要过于复杂，哪天你发现一个你明明已经 exports 了的方法报 <code>undefined is not a function</code>，我们就该提醒一下自己：哦，也许是它来了。</p>
+<h4 id="2-exports-和-module-exports"><a href="#2-exports-和-module-exports" class="headerlink" title="2.exports 和 module.exports"></a>2.exports 和 module.exports</h4><p>require 用来加载代码，而 exports 和 module.exports 则用来导出代码。</p>
+<p>很多新手可能会迷惑于 exports 和 module.exports 的区别，为了更好的理解 exports 和 module.exports 的关系，我们先来巩固下 js 的基础。示例：</p>
+<p><strong>test.js</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = &#123;<span class="attr">name</span>: <span class="number">1</span>&#125;</span><br><span class="line"><span class="keyword">var</span> b = a</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(a)</span><br><span class="line"><span class="built_in">console</span>.log(b)</span><br><span class="line"></span><br><span class="line">b.name = <span class="number">2</span></span><br><span class="line"><span class="built_in">console</span>.log(a)</span><br><span class="line"><span class="built_in">console</span>.log(b)</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> b = &#123;<span class="attr">name</span>: <span class="number">3</span>&#125;</span><br><span class="line"><span class="built_in">console</span>.log(a)</span><br><span class="line"><span class="built_in">console</span>.log(b)</span><br></pre></td></tr></table></figure>
+<p>运行 test.js 结果为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123; name: 1 &#125;</span><br><span class="line">&#123; name: 1 &#125;</span><br><span class="line">&#123; name: 2 &#125;</span><br><span class="line">&#123; name: 2 &#125;</span><br><span class="line">&#123; name: 2 &#125;</span><br><span class="line">&#123; name: 3 &#125;</span><br></pre></td></tr></table></figure>
+<p><strong>解释</strong>：a 是一个对象，b 是对 a 的引用，即 a 和 b 指向同一块内存，所以前两个输出一样。当对 b 作修改时，即 a 和 b 指向同一块内存地址的内容发生了改变，所以 a 也会体现出来，所以第三四个输出一样。当 b 被覆盖时，b 指向了一块新的内存，a 还是指向原来的内存，所以最后两个输出不一样。</p>
+<p>明白了上述例子后，我们只需知道三点就知道 exports 和 module.exports 的区别了：</p>
+<ol>
+<li>module.exports 初始值为一个空对象 {}</li>
+<li>exports 是指向的 module.exports 的引用</li>
+<li>require() 返回的是 module.exports 而不是 exports</li>
+</ol>
+<p>Node.js 官方文档的截图证实了我们的观点:</p>
+<p><img src="./img/2.2.1.png" alt=""></p>
+<h4 id="exports-module-exports-…"><a href="#exports-module-exports-…" class="headerlink" title="exports = module.exports = {…}"></a>exports = module.exports = {…}</h4><p>我们经常看到这样的写法：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">exports = <span class="built_in">module</span>.exports = &#123;...&#125;</span><br></pre></td></tr></table></figure>
+<p>上面的代码等价于:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;...&#125;</span><br><span class="line">exports = <span class="built_in">module</span>.exports</span><br></pre></td></tr></table></figure>
+<p>原理很简单：module.exports 指向新的对象时，exports 断开了与 module.exports 的引用，那么通过 exports = module.exports 让 exports 重新指向 module.exports。</p>
+<blockquote>
+<p>小提示：ES6 的 import 和 export 不在本文的讲解范围，有兴趣的读者可以去学习阮一峰老师的<a href="http://es6.ruanyifeng.com/" target="_blank" rel="noopener">《ECMAScript6入门》</a>。</p>
+</blockquote>
+<h4 id="3-Promise"><a href="#3-Promise" class="headerlink" title="3.Promise"></a>3.Promise</h4><p>网上已经有许多关于 Promise 的资料了，这里不在赘述。以下 4 个链接供读者学习：</p>
+<ol>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise" target="_blank" rel="noopener">https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise</a> （基础）</li>
+<li><a href="http://liubin.org/promises-book/" target="_blank" rel="noopener">http://liubin.org/promises-book/</a> （开源 Promise 迷你书）</li>
+<li><a href="http://fex.baidu.com/blog/2015/07/we-have-a-problem-with-promises/" target="_blank" rel="noopener">http://fex.baidu.com/blog/2015/07/we-have-a-problem-with-promises/</a> （进阶）</li>
+<li><a href="https://promisesaplus.com/" target="_blank" rel="noopener">https://promisesaplus.com/</a> （官方定义规范）</li>
+</ol>
+<p>Promise 用于异步流程控制，生成器与 yield 也能实现流程控制（基于 co），async/await 结合 Promise 也可以实现流程控制，有兴趣请查阅 <a href="http://es6.ruanyifeng.com/#docs/async#async函数" target="_blank" rel="noopener">《ECMAScript6入门》</a>。</p>
+<h3 id="深入-Promise"><a href="#深入-Promise" class="headerlink" title="深入 Promise"></a>深入 Promise</h3><ul>
+<li><a href="https://zhuanlan.zhihu.com/p/30797777" target="_blank" rel="noopener">Promise 必知必会（十道题）</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/25178630" target="_blank" rel="noopener">深入 Promise(一)——Promise 实现详解</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/25198178" target="_blank" rel="noopener">深入 Promise(二)——进击的 Promise</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/25199781" target="_blank" rel="noopener">深入 Promise(三)——命名 Promise</a></li>
+</ul>
+<h4 id="4-环境变量"><a href="#4-环境变量" class="headerlink" title="4.环境变量"></a>4.环境变量</h4><p>环境变量不属于 Node.js 的知识范畴，只不过我们在开发 Node.js 应用时经常与环境变量打交道，所以这里简单介绍下。</p>
+<p>环境变量（environment variables）一般是指在操作系统中用来指定操作系统运行环境的一些参数。在 Mac 和 Linux 的终端直接输入 env，会列出当前的环境变量，如：USER=xxx。简单来讲，环境变量就是传递参数给运行程序的。</p>
+<p>在 Node.js 中，我们经常这么用:</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">NODE_ENV=<span class="built_in">test</span> node app</span><br></pre></td></tr></table></figure>
+<p>通过以上命令启动程序，指定当前环境变量 <code>NODE_ENV</code> 的值为 test，那么在 app.js 中可通过 <code>process.env</code> 来获取环境变量:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">console.log(process.env.NODE_ENV) //test</span><br></pre></td></tr></table></figure>
+<p>另一个常见的例子是使用 <a href="https://www.npmjs.com/package/debug" target="_blank" rel="noopener">debug</a> 模块时:</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DEBUG=* node app</span><br></pre></td></tr></table></figure>
+<p>Windows 用户需要首先设置环境变量，然后再执行程序：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">set</span> DEBUG=*</span><br><span class="line"><span class="built_in">set</span> NODE_ENV=<span class="built_in">test</span></span><br><span class="line">node app</span><br></pre></td></tr></table></figure>
+<p>或者使用 <a href="https://www.npmjs.com/package/cross-env" target="_blank" rel="noopener">cross-env</a>：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i cross-env -g</span><br></pre></td></tr></table></figure>
+<p>使用方式：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cross-env NODE_ENV=<span class="built_in">test</span> node app</span><br></pre></td></tr></table></figure>
+<p><br></p>
+<h4 id="5-package-json"><a href="#5-package-json" class="headerlink" title="5.package.json"></a>5.package.json</h4><p>package.json 对于 Node.js 应用来说是一个不可或缺的文件，它存储了该 Node.js 应用的名字、版本、描述、作者、入口文件、脚本、版权等等信息。npm 官网有 package.json 每个字段的详细介绍：<a href="https://docs.npmjs.com/files/package.json" target="_blank" rel="noopener">https://docs.npmjs.com/files/package.json</a>。</p>
+<p><strong>semver</strong></p>
+<p>语义化版本（semver）即 dependencies、devDependencies 和 peerDependencies 里的如：<code>&quot;co&quot;: &quot;^4.6.0&quot;</code>。</p>
+<p>semver 格式：<code>主版本号.次版本号.修订号</code>。版本号递增规则如下：</p>
+<ul>
+<li><code>主版本号</code>：做了不兼容的 API 修改</li>
+<li><code>次版本号</code>：做了向下兼容的功能性新增</li>
+<li><code>修订号</code>：做了向下兼容的 bug 修正</li>
+</ul>
+<p>更多阅读：</p>
+<ol>
+<li><a href="http://semver.org/lang/zh-CN/" target="_blank" rel="noopener">http://semver.org/lang/zh-CN/</a></li>
+<li><a href="http://taobaofed.org/blog/2016/08/04/instructions-of-semver/" target="_blank" rel="noopener">http://taobaofed.org/blog/2016/08/04/instructions-of-semver/</a></li>
+</ol>
+<p>作为 Node.js 的开发者，我们在发布 npm 模块的时候一定要遵守语义化版本的命名规则，即：有 breaking change 发大版本，有新增的功能发小版本，有小的 bug 修复或优化则发修订版本。</p>
+
+            <div class="clearfix"></div>
+            <hr class="nogutter">
+        </div>
+        <nav class="m-pagination col-md-8 col-md-offset-2 col-sm-24" role="pagination">
+    
+    
+    <a class="pull-right" href="/2018/07/03/git/">
+        Git常用命令/Gitflow工作流🔥 →
+    </a>
+    
+</nav>
+
+        <div class="col-md-8 col-md-offset-2 col-sm-24"><script type="text/javascript">
+  /**
+   * 搜狐畅言
+   */
+
+  /*
+  document.write('<div id="SOHUCS" sid="' + window.location.pathname.slice(1) + '" ></div>');
+
+  window.onload = function () {
+    (function () {
+      var appid = 'cytXXXX';
+      var conf = 'prod_xxxxxxxxxxxxxxxxx';
+      var width = window.innerWidth || document.documentElement.clientWidth;
+      var loadJs = function (d, a, id) {
+        var c = document.getElementsByTagName("head")[0] || document.head || document.documentElement;
+        var b = document.createElement("script");
+        b.setAttribute("type", "text/javascript");
+        b.setAttribute("charset", "UTF-8");
+        b.setAttribute("src", d);
+        if (id) {
+          b.setAttribute("id", id);
+        }
+        if (typeof a === "function") {
+          if (window.attachEvent) {
+            b.onreadystatechange = function () {
+              var e = b.readyState;
+              if (e === "loaded" || e === "complete") {
+                b.onreadystatechange = null;
+                a()
+              }
+            }
+          } else {
+            b.onload = a
+          }
+        }
+        c.appendChild(b)
+      };
+
+      loadJs("https://changyan.sohu.com/upload/changyan.js", function () {
+        window.changyan.api.config({
+          appid: appid,
+          conf: conf
+        })
+      });
+    })();
+  }
+  */
+
+</script>
+</div>
+    </div>
+</section>
+
+
+      
+<!-- ============================ Footer =========================== -->
+
+<footer>
+    <div class="container">
+            <div class="copy">
+                <p>
+                    &copy; 2014<script>new Date().getFullYear()>2010&&document.write("-"+new Date().getFullYear());</script>, Content By wangyixuan. All Rights Reserved.
+                </p>
+                <!-- <p>Theme By <a href="//go.kieran.top" style="color: #767D84">Kieran</a></p> -->
+            </div>
+            <div class="social">
+                <ul>
+                    
+                    <li><a href="https://github.com/gassnake999" title="Github" target="_blank"><i class="icon-github"></i></a>&nbsp;</li>
+                    
+                    
+                    
+                    
+                    
+                    <li><a href="https://weibo.com/u/2022482611?refer_flag=1001030101_" title="Sina-Weibo" target="_blank"><i class="icon-sina-weibo"></i></a>&nbsp;</li>
+                    
+                </ul>
+            </div>
+            <div class="clearfix"> </div>
+        </div>
+</footer>
+
+<!-- ============================ END Footer =========================== -->
+      <!-- Load our scripts -->
+<!-- Resizable 'on-demand' full-height hero -->
+<script type="text/javascript">
+    var resizeHero = function () {
+        var hero = $(".cover,.heightblock"),
+            window1 = $(window);
+        hero.css({
+            "height": window1.height()
+        });
+    };
+
+    resizeHero();
+
+    $(window).resize(function () {
+        resizeHero();
+    });
+</script>
+<script src="/js/plugins.min.js"></script><!-- Bootstrap core and concatenated plugins always load here -->
+<script src="/js/scripts.js"></script><!-- Theme scripts -->
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$('#intro').find('img').each(function(){
+  var alt = this.alt;
+
+  if (alt){
+    $(this).after('<span class="caption" style="display:none">' + alt + '</span>');
+  }
+
+  $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox" rel="gallery" />');
+});
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+      
+</body>
+</html>
